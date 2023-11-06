@@ -27,3 +27,39 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run test
+
+  publish:
+    name: Publish to GitHub Packages
+    needs: build
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@${{ github.repository_owner }}"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Set package.json package name
+        run: npm pkg set name=@${{ github.repository_owner }}/${{ github.repository }}
+
+      - name: Set package.json package version
+        #   run: npm pkg set version=$(git rev-parse --short HEAD)
+        run: npm pkg set version=$(date +%s)
+
+      - name: Build
+        run: npm run build
+
+      - name: Set registry url
+        run: npm config set -l registry https://npm.pkg.github.com
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
