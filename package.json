@@ -13,7 +13,7 @@
     "clean": "rimraf -v dist",
     "prebuild": "npm run clean && npm ci",
     "test": "cross-env FORCE_COLOR=1 ava",
-    "build": "cross-env FORCE_COLOR=1 tsc --b",
+    "build": "cross-env FORCE_COLOR=1 tsc --noEmit && tsup",
     "watch": "cross-env FORCE_COLOR=1 tsc --b --watch"
   },
   "repository": {
@@ -41,7 +41,8 @@
     "@typescript-eslint/parser": "^6.8.0",
     "ava": "^5.2.0",
     "typescript": "^5.0.4",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "tsup": "^7.2.0"
   },
   "dependencies": {
     "@google-labs/breadboard": "^0.4.0",
