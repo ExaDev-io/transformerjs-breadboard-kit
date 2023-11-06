@@ -10,6 +10,8 @@
     "dist/src"
   ],
   "scripts": {
+    "clean": "rimraf -v dist",
+    "prebuild": "npm run clean && npm ci",
     "test": "cross-env FORCE_COLOR=1 ava",
     "build": "cross-env FORCE_COLOR=1 tsc --b",
     "watch": "cross-env FORCE_COLOR=1 tsc --b --watch"
