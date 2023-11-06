@@ -1,0 +1,15 @@
+{
+  "entry": [
+    "src/index.ts"
+  ],
+  "format": [
+    "cjs",
+    "esm",
+    "iife"
+  ],
+  "cjsInterop": true,
+  "bundle": true,
+  "clean": true,
+  "sourcemap": true,
+  "onSuccess": "tsc --emitDeclarationOnly --declaration --project tsconfig.build.json"
+}
